@@ -16,12 +16,13 @@ interface PowerTimersFormProps {
 export default function PowerTimersForm({ powerTimers, onSubmit, isSubmitting = false }: PowerTimersFormProps) {
 	const form = useForm<SavePowerTimersInput>({
 		resolver: zodResolver(savePowerTimersInputSchema),
+		mode: "onChange",
 		defaultValues: {
 			powerTimers,
 		},
 	});
 
-	const { fields, append, remove } = useFieldArray({
+	const { fields, append } = useFieldArray({
 		control: form.control,
 		name: "powerTimers",
 	});
@@ -42,12 +43,12 @@ export default function PowerTimersForm({ powerTimers, onSubmit, isSubmitting = 
 			<form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
 				{/* Mobile Accordion View */}
 				<div className="block md:hidden">
-					<PowerTimersAccordion fields={fields} form={form} />
+					<PowerTimersAccordion fields={fields} form={form} control={form.control} />
 				</div>
 
 				{/* Desktop Table View */}
 				<div className="hidden md:block">
-					<PowerTimersTable fields={fields} form={form} />
+					<PowerTimersTable fields={fields} form={form} control={form.control} />
 				</div>
 
 				{/* Show form-level validation errors */}

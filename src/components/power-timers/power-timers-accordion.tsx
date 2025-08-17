@@ -4,20 +4,24 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Switch } from "@/components/ui/switch";
-import type { UseFormReturn, FieldArrayWithId } from "react-hook-form";
 import type { SavePowerTimersInput } from "@/orpc/schema";
-import TimerSlider from "./timer-slider";
-import DaySelector from "./day-selector";
+import { getTimerErrorMessages } from "@/utils/timer-errors";
+import type { Control, FieldArrayWithId, UseFormReturn } from "react-hook-form";
+import DaySelectorController from "./day-selector-controller";
+import EnabledToggleController from "./enabled-toggle-controller";
+import TimerErrorAlert from "./timer-error-alert";
+import TimerSliderController from "./timer-slider-controller";
 
 interface PowerTimersAccordionProps {
 	fields: FieldArrayWithId<SavePowerTimersInput, "powerTimers", "id">[];
 	form: UseFormReturn<SavePowerTimersInput>;
+	control: Control<SavePowerTimersInput>;
 }
 
 export default function PowerTimersAccordion({
 	fields,
 	form,
+	control,
 }: PowerTimersAccordionProps) {
 	const formatTimeRange = (powerOffTime: string, powerOnTime: string) => {
 		return `${powerOffTime} - ${powerOnTime}`;
@@ -27,48 +31,34 @@ export default function PowerTimersAccordion({
 		<Accordion type="single" collapsible>
 			{fields.map((field, index) => {
 				const timer = form.watch(`powerTimers.${index}`);
+				const timerErrors = form.formState.errors.powerTimers?.[index];
+				const errorMessages = getTimerErrorMessages(timerErrors);
+
 				return (
-					<AccordionItem key={field.id} value={`timer-${index}`}>
-						<AccordionTrigger>
-							<div className="flex items-center justify-between w-full mr-4">
-								<span className="font-medium">
-									{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
-								</span>
-								<div onClick={(e) => e.stopPropagation()}>
-									<Switch
-										checked={timer.enabled}
-										onCheckedChange={(enabled) =>
-											form.setValue(`powerTimers.${index}.enabled`, enabled)
-										}
-										aria-label={`${timer.enabled ? "Disable" : "Enable"} timer ${timer.timerNumber}`}
+					<div key={field.id} className="space-y-2">
+						<AccordionItem value={`timer-${index}`}>
+							<AccordionTrigger>
+								<div className="flex items-center justify-between w-full mr-4">
+									<span className="font-medium">
+										{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
+									</span>
+									<EnabledToggleController
+										index={index}
+										control={control}
+										form={form}
+										timerNumber={timer.timerNumber}
 									/>
 								</div>
-							</div>
-						</AccordionTrigger>
-						<AccordionContent className="space-y-4">
-							<TimerSlider
-								powerOffTime={timer.powerOffTime}
-								powerOnTime={timer.powerOnTime}
-								onPowerOffTimeChange={(time) => 
-									form.setValue(`powerTimers.${index}.powerOffTime`, time)
-								}
-								onPowerOnTimeChange={(time) => 
-									form.setValue(`powerTimers.${index}.powerOnTime`, time)
-								}
-								powerOffTimeError={form.formState.errors.powerTimers?.[index]?.powerOffTime?.message}
-								powerOnTimeError={form.formState.errors.powerTimers?.[index]?.powerOnTime?.message}
-								onValidate={() => form.trigger([`powerTimers.${index}.powerOffTime`, `powerTimers.${index}.powerOnTime`])}
-							/>
-							
-							<DaySelector
-								selectedDays={timer.daysOfWeek}
-								onDaysChange={(days) => 
-									form.setValue(`powerTimers.${index}.daysOfWeek`, days)
-								}
-								error={form.formState.errors.powerTimers?.[index]?.daysOfWeek?.message}
-							/>
-						</AccordionContent>
-					</AccordionItem>
+							</AccordionTrigger>
+							<AccordionContent className="space-y-4">
+								<TimerSliderController index={index} control={control} />
+
+								<DaySelectorController index={index} control={control} />
+							</AccordionContent>
+						</AccordionItem>
+
+						<TimerErrorAlert errorMessages={errorMessages} />
+					</div>
 				);
 			})}
 		</Accordion>

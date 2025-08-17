@@ -5,10 +5,10 @@ export const powerTimerSchema = z
 		timerNumber: z.number().int().min(1),
 		enabled: z.boolean(),
 		powerOffTime: z.string().regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, {
-			message: "Power off time must be in HH:MM format",
+			message: "Please select a power off time",
 		}),
 		powerOnTime: z.string().regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, {
-			message: "Power on time must be in HH:MM format",
+			message: "Please select a power on time",
 		}),
 		daysOfWeek: z.array(
 			z.enum([
@@ -32,16 +32,7 @@ export const powerTimerSchema = z
 			path: ["daysOfWeek"],
 		},
 	)
-	.refine(
-		(data) => {
-			if (!data.enabled) return true;
-			return data.powerOffTime && data.powerOnTime;
-		},
-		{
-			message: "Enabled timer must have both power off and power on times",
-			path: ["powerOffTime"],
-		},
-	);
+;
 
 export const powerTimersArraySchema = z
 	.array(powerTimerSchema)
