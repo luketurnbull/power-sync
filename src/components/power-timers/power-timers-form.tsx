@@ -26,7 +26,6 @@ export default function PowerTimersForm({
 	const form = useForm<SavePowerTimersInput>({
 		resolver: zodResolver(savePowerTimersInputSchema),
 		mode: "onChange",
-		reValidateMode: "onSubmit",
 		defaultValues: {
 			powerTimers,
 		},
