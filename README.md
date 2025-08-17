@@ -73,4 +73,7 @@ bunx --bun run check
 - [x] Create zod schemas for the data
 - [x] Create oRPC call to get power cycles
 - [x] Create oRPC call to update power cycles
-- [ ] Add all shadcn/ui components needed
+- [x] Add all shadcn/ui components needed
+- [x] Create initial component for power timers
+- [ ] Create Accordion for mobile version
+- [ ] Create Table for desktop version
