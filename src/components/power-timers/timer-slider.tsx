@@ -7,17 +7,25 @@ interface TimerSliderProps {
 	powerOnTime: string;
 	onPowerOffTimeChange: (time: string) => void;
 	onPowerOnTimeChange: (time: string) => void;
+	powerOffTimeError?: string;
+	powerOnTimeError?: string;
+	onValidate?: () => void;
 }
 
 export default function TimerSlider({ 
 	powerOffTime, 
 	powerOnTime, 
 	onPowerOffTimeChange, 
-	onPowerOnTimeChange 
+	onPowerOnTimeChange,
+	powerOffTimeError,
+	powerOnTimeError,
+	onValidate
 }: TimerSliderProps) {
 	// Convert time string to minutes since midnight
 	const timeToMinutes = (time: string): number => {
+		if (!time || !time.includes(':')) return 0;
 		const [hours, minutes] = time.split(':').map(Number);
+		if (Number.isNaN(hours) || Number.isNaN(minutes)) return 0;
 		return hours * 60 + minutes;
 	};
 
@@ -35,19 +43,25 @@ export default function TimerSlider({
 		if (values.length === 2) {
 			onPowerOffTimeChange(minutesToTime(values[0]));
 			onPowerOnTimeChange(minutesToTime(values[1]));
+			onValidate?.();
 		}
 	};
 
 	const handlePowerOffInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		onPowerOffTimeChange(e.target.value);
+		onValidate?.();
 	};
 
 	const handlePowerOnInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		onPowerOnTimeChange(e.target.value);
+		onValidate?.();
 	};
 
+	// Show first available error (prioritize start time error)
+	const errorMessage = powerOffTimeError || powerOnTimeError;
+
 	return (
-		<div className="space-y-4">
+		<div className="space-y-2">
 			{/* Mobile: Inputs in row, Desktop: All in row */}
 			<div className="flex flex-col md:flex-row md:items-center gap-4">
 				{/* Mobile: Both inputs in grid, Desktop: Just start input */}
@@ -57,6 +71,7 @@ export default function TimerSlider({
 						value={powerOffTime}
 						onChange={handlePowerOffInputChange}
 						startIcon={<Clock className="w-4 h-4" />}
+						aria-invalid={!!powerOffTimeError}
 					/>
 					{/* End input - hidden on desktop, shown on mobile */}
 					<Input
@@ -65,6 +80,7 @@ export default function TimerSlider({
 						onChange={handlePowerOnInputChange}
 						startIcon={<Clock className="w-4 h-4" />}
 						className="md:hidden"
+						aria-invalid={!!powerOnTimeError}
 					/>
 				</div>
 				
@@ -87,8 +103,14 @@ export default function TimerSlider({
 					onChange={handlePowerOnInputChange}
 					startIcon={<Clock className="w-4 h-4" />}
 					className="hidden md:block md:w-24"
+					aria-invalid={!!powerOnTimeError}
 				/>
 			</div>
+
+			{/* Single error message below everything */}
+			{errorMessage && (
+				<p className="text-sm text-destructive">{errorMessage}</p>
+			)}
 		</div>
 	);
 }

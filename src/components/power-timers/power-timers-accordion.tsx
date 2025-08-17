@@ -22,7 +22,7 @@ export default function PowerTimersAccordion({
 	};
 
 	return (
-		<Accordion type="single">
+		<Accordion type="single" collapsible>
 			{fields.map((field, index) => {
 				const timer = form.watch(`powerTimers.${index}`);
 				return (
@@ -40,6 +40,9 @@ export default function PowerTimersAccordion({
 								onPowerOnTimeChange={(time) => 
 									form.setValue(`powerTimers.${index}.powerOnTime`, time)
 								}
+								powerOffTimeError={form.formState.errors.powerTimers?.[index]?.powerOffTime?.message}
+								powerOnTimeError={form.formState.errors.powerTimers?.[index]?.powerOnTime?.message}
+								onValidate={() => form.trigger([`powerTimers.${index}.powerOffTime`, `powerTimers.${index}.powerOnTime`])}
 							/>
 							<div className="text-sm text-muted-foreground">
 								Days: {timer.daysOfWeek.join(", ")}

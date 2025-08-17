@@ -29,6 +29,9 @@ export default function PowerTimersTable({
 									onPowerOnTimeChange={(time) => 
 										form.setValue(`powerTimers.${index}.powerOnTime`, time)
 									}
+									powerOffTimeError={form.formState.errors.powerTimers?.[index]?.powerOffTime?.message}
+									powerOnTimeError={form.formState.errors.powerTimers?.[index]?.powerOnTime?.message}
+									onValidate={() => form.trigger([`powerTimers.${index}.powerOffTime`, `powerTimers.${index}.powerOnTime`])}
 								/>
 							</TableCell>
 							<TableCell>{timer.daysOfWeek.join(", ")}</TableCell>
