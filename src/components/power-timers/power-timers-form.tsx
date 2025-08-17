@@ -4,10 +4,11 @@ import {
 	savePowerTimersInputSchema,
 } from "@/orpc/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Plus, Save } from "lucide-react";
+import { AlertCircle, Loader2, Plus, Save } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
-import { Form, FormMessage } from "../ui/form";
+import { Form } from "../ui/form";
 import PowerTimersAccordion from "./power-timers-accordion";
 import PowerTimersTable from "./power-timers-table";
 
@@ -38,7 +39,7 @@ export default function PowerTimersForm({
 	const addTimer = () => {
 		const newTimer: PowerTimer = {
 			timerNumber: fields.length + 1,
-			enabled: false,
+			enabled: true,
 			powerOffTime: "09:00",
 			powerOnTime: "17:00",
 			daysOfWeek: [],
@@ -52,6 +53,16 @@ export default function PowerTimersForm({
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="w-full flex flex-col gap-4"
 			>
+				{form.formState.errors.powerTimers?.message && (
+					<Alert variant="destructive">
+						<AlertCircle className="w-4 h-4" />
+						<AlertTitle>Too many timers</AlertTitle>
+						<AlertDescription>
+							{form.formState.errors.powerTimers.message}
+						</AlertDescription>
+					</Alert>
+				)}
+
 				{/* Mobile Accordion View */}
 				<div className="block md:hidden">
 					<PowerTimersAccordion
@@ -69,11 +80,6 @@ export default function PowerTimersForm({
 						control={form.control}
 					/>
 				</div>
-
-				{/* Show form-level validation errors */}
-				{form.formState.errors.powerTimers && (
-					<FormMessage>{form.formState.errors.powerTimers.message}</FormMessage>
-				)}
 
 				<div className="flex flex-col md:flex-row justify-end gap-2">
 					<Button type="button" variant="outline" onClick={addTimer}>

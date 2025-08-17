@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
 
 function App() {
 	return (
-		<div className="pt-30 flex flex-col items-center px-4 container mx-auto gap-10">
+		<div className="py-30 flex flex-col items-center px-4 container mx-auto gap-10">
 			<div className="flex flex-col gap-4 items-center">
 				<h1 className="text-5xl font-bold text-primary">Power Sync</h1>
 				<p className="text-lg text-muted-foreground">
