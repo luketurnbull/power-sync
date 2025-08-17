@@ -26,6 +26,7 @@ export default function PowerTimersForm({
 	const form = useForm<SavePowerTimersInput>({
 		resolver: zodResolver(savePowerTimersInputSchema),
 		mode: "onChange",
+		reValidateMode: "onSubmit",
 		defaultValues: {
 			powerTimers,
 		},
@@ -44,6 +45,7 @@ export default function PowerTimersForm({
 			powerOnTime: "17:00",
 			daysOfWeek: [],
 		};
+
 		append(newTimer);
 	};
 
@@ -53,12 +55,12 @@ export default function PowerTimersForm({
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="w-full flex flex-col gap-4"
 			>
-				{form.formState.errors.powerTimers?.message && (
+				{form.formState.errors.powerTimers?.root?.message && (
 					<Alert variant="destructive">
 						<AlertCircle className="w-4 h-4" />
 						<AlertTitle>Too many timers</AlertTitle>
 						<AlertDescription>
-							{form.formState.errors.powerTimers.message}
+							{form.formState.errors.powerTimers.root.message}
 						</AlertDescription>
 					</Alert>
 				)}
