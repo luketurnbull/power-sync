@@ -5,7 +5,9 @@ interface TimerErrorAlertProps {
 	errorMessages: string[];
 }
 
-export default function TimerErrorAlert({ errorMessages }: TimerErrorAlertProps) {
+export default function TimerErrorAlert({
+	errorMessages,
+}: TimerErrorAlertProps) {
 	if (errorMessages.length === 0) {
 		return null;
 	}
@@ -15,7 +17,7 @@ export default function TimerErrorAlert({ errorMessages }: TimerErrorAlertProps)
 			<AlertCircle className="h-4 w-4" />
 			<AlertTitle>Please fix the following errors:</AlertTitle>
 			<AlertDescription>
-				<ul className="list-disc list-inside space-y-1">
+				<ul className="list-disc list-inside space-y-1 mt-2 font-light">
 					{errorMessages.map((error) => (
 						<li key={error}>{error}</li>
 					))}

@@ -104,7 +104,7 @@ export default function PowerTimersForm({
 				</div>
 
 				<div className="flex flex-col md:flex-row justify-end gap-2">
-					<Button type="button" variant="outline" onClick={addTimer}>
+					<Button type="button" variant="secondary" onClick={addTimer}>
 						<Plus className="w-4 h-4" />
 						Add New
 					</Button>
