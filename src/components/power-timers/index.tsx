@@ -1,6 +1,6 @@
 import { orpc } from "@/orpc/client";
+import type { SavePowerTimersInput } from "@/orpc/schema";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { type SavePowerTimersInput } from "@/orpc/schema";
 import PowerTimersForm from "./power-timers-form";
 
 export default function PowerTimers() {
@@ -26,8 +26,8 @@ export default function PowerTimers() {
 	}
 
 	return (
-		<PowerTimersForm 
-			powerTimers={powerTimers} 
+		<PowerTimersForm
+			powerTimers={powerTimers}
 			onSubmit={handleSubmit}
 			isSubmitting={isPending}
 		/>

@@ -4,22 +4,18 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useFieldArray } from "react-hook-form";
-import type { UseFormReturn } from "react-hook-form";
+import type { UseFormReturn, FieldArrayWithId } from "react-hook-form";
 import type { SavePowerTimersInput } from "@/orpc/schema";
 
 interface PowerTimersAccordionProps {
+	fields: FieldArrayWithId<SavePowerTimersInput, "powerTimers", "id">[];
 	form: UseFormReturn<SavePowerTimersInput>;
 }
 
 export default function PowerTimersAccordion({
+	fields,
 	form,
 }: PowerTimersAccordionProps) {
-	const { fields } = useFieldArray({
-		control: form.control,
-		name: "powerTimers",
-	});
-
 	const formatTimeRange = (powerOffTime: string, powerOnTime: string) => {
 		return `${powerOffTime} - ${powerOnTime}`;
 	};

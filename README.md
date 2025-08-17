@@ -2,6 +2,11 @@
 
 Code test for Fusion Sync. Requirements found [here](/requirements/REQUIREMENTS.md).
 
+## Presumptions
+
+- Adding a new timer defaults to 9:00AM - 5:00PM
+- Has to be mobile friendly UI
+
 ## Tech Stack
 
 - [Tanstack Start](https://tanstack.com/start) - Meta framework for building web applications.
@@ -79,7 +84,7 @@ bunx --bun run check
 - [x] Create Table for desktop version
 - [x] Add buttons to add and save power timers
 - [x] Wrap the Accordion and Table in a Form component
-- [ ] Implement the logic to add and save power timers using the Form component
+- [x] Implement the logic to add and save power timers using the Form component
 - [ ] Create the Timer Slider component
 - [ ] Create the Day Selector component
 - [ ] Create the Enabled Toggle component

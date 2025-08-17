@@ -1,20 +1,16 @@
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { useFieldArray } from "react-hook-form";
-import type { UseFormReturn } from "react-hook-form";
+import type { UseFormReturn, FieldArrayWithId } from "react-hook-form";
 import type { SavePowerTimersInput } from "@/orpc/schema";
 
 interface PowerTimersTableProps {
+	fields: FieldArrayWithId<SavePowerTimersInput, "powerTimers", "id">[];
 	form: UseFormReturn<SavePowerTimersInput>;
 }
 
 export default function PowerTimersTable({
+	fields,
 	form,
 }: PowerTimersTableProps) {
-	const { fields } = useFieldArray({
-		control: form.control,
-		name: "powerTimers",
-	});
-
 	return (
 		<Table>
 			<TableBody>
