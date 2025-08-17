@@ -4,12 +4,8 @@ export const powerTimerSchema = z
 	.object({
 		timerNumber: z.number().int().min(1),
 		enabled: z.boolean(),
-		powerOffTime: z.string().regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, {
-			message: "Power off time is required",
-		}),
-		powerOnTime: z.string().regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, {
-			message: "Power on time is required",
-		}),
+		powerOffTime: z.string(),
+		powerOnTime: z.string(),
 		daysOfWeek: z.array(
 			z.enum([
 				"MONDAY",
@@ -30,6 +26,26 @@ export const powerTimerSchema = z
 		{
 			message: "Please select at least one day",
 			path: ["daysOfWeek"],
+		},
+	)
+	.refine(
+		(data) => {
+			if (!data.enabled) return true;
+			return /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(data.powerOffTime);
+		},
+		{
+			message: "Power off time is required",
+			path: ["powerOffTime"],
+		},
+	)
+	.refine(
+		(data) => {
+			if (!data.enabled) return true;
+			return /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(data.powerOnTime);
+		},
+		{
+			message: "Power on time is required",
+			path: ["powerOnTime"],
 		},
 	)
 ;
