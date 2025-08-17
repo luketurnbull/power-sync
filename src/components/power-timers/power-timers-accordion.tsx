@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import type { UseFormReturn, FieldArrayWithId } from "react-hook-form";
 import type { SavePowerTimersInput } from "@/orpc/schema";
+import TimerSlider from "./timer-slider";
 
 interface PowerTimersAccordionProps {
 	fields: FieldArrayWithId<SavePowerTimersInput, "powerTimers", "id">[];
@@ -29,7 +30,17 @@ export default function PowerTimersAccordion({
 						<AccordionTrigger>
 							{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
 						</AccordionTrigger>
-						<AccordionContent>
+						<AccordionContent className="space-y-4">
+							<TimerSlider
+								powerOffTime={timer.powerOffTime}
+								powerOnTime={timer.powerOnTime}
+								onPowerOffTimeChange={(time) => 
+									form.setValue(`powerTimers.${index}.powerOffTime`, time)
+								}
+								onPowerOnTimeChange={(time) => 
+									form.setValue(`powerTimers.${index}.powerOnTime`, time)
+								}
+							/>
 							<div className="text-sm text-muted-foreground">
 								Days: {timer.daysOfWeek.join(", ")}
 							</div>

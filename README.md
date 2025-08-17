@@ -85,7 +85,7 @@ bunx --bun run check
 - [x] Add buttons to add and save power timers
 - [x] Wrap the Accordion and Table in a Form component
 - [x] Implement the logic to add and save power timers using the Form component
-- [ ] Create the Timer Slider component
+- [x] Create the Timer Slider component
 - [ ] Create the Day Selector component
 - [ ] Create the Enabled Toggle component
 - [ ] Create the Drop Down menu component with delete option

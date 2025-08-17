@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { UseFormReturn, FieldArrayWithId } from "react-hook-form";
 import type { SavePowerTimersInput } from "@/orpc/schema";
+import TimerSlider from "./timer-slider";
 
 interface PowerTimersTableProps {
 	fields: FieldArrayWithId<SavePowerTimersInput, "powerTimers", "id">[];
@@ -18,9 +19,18 @@ export default function PowerTimersTable({
 					const timer = form.watch(`powerTimers.${index}`);
 					return (
 						<TableRow key={field.id}>
-							<TableCell>{timer.timerNumber}</TableCell>
-							<TableCell>{timer.powerOffTime}</TableCell>
-							<TableCell>{timer.powerOnTime}</TableCell>
+							<TableCell className="w-[400px]">
+								<TimerSlider
+									powerOffTime={timer.powerOffTime}
+									powerOnTime={timer.powerOnTime}
+									onPowerOffTimeChange={(time) => 
+										form.setValue(`powerTimers.${index}.powerOffTime`, time)
+									}
+									onPowerOnTimeChange={(time) => 
+										form.setValue(`powerTimers.${index}.powerOnTime`, time)
+									}
+								/>
+							</TableCell>
 							<TableCell>{timer.daysOfWeek.join(", ")}</TableCell>
 							<TableCell>{timer.enabled ? "Yes" : "No"}</TableCell>
 						</TableRow>
