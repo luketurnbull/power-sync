@@ -4,8 +4,11 @@ Code test for Fusion Sync. Requirements found [here](/requirements/REQUIREMENTS.
 
 ## Presumptions
 
-- Adding a new timer defaults to 9:00AM - 5:00PM
+- Adding a new timer defaults to 9:00AM - 5:00PM, enabled, and Monday - Friday
 - Has to be mobile friendly UI
+- Has to be able to add and delete timers
+- Can't edit disabled timers
+- Show errors on change
 
 ## Tech Stack
 
@@ -89,7 +92,7 @@ bunx --bun run check
 - [x] Create the Day Selector component
 - [x] Create the Enabled Toggle component
 - [x] Add disabled state to the power timers
-- [ ] Create the Drop Down menu component with delete option
+- [x] Create the Drop Down menu component with delete option
 - [ ] Add saving state (Outline in the requirements this could take 20 - 30 seconds)
 - [ ] Add sonner for success and error messages?
 - [ ] Add testing around validation using Vitest

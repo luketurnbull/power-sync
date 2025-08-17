@@ -42,10 +42,11 @@ export default function PowerTimersForm({
 			enabled: true,
 			powerOffTime: "09:00",
 			powerOnTime: "17:00",
-			daysOfWeek: [],
+			daysOfWeek: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"],
 		};
 
 		append(newTimer);
+		form.trigger();
 	};
 
 	const handleDuplicate = (index: number) => {
@@ -54,11 +55,14 @@ export default function PowerTimersForm({
 			...timerToDuplicate,
 			timerNumber: fields.length + 1,
 		};
+
 		append(duplicatedTimer);
+		form.trigger();
 	};
 
 	const handleDelete = (index: number) => {
 		remove(index);
+		form.trigger();
 	};
 
 	return (

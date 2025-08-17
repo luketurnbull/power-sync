@@ -1,7 +1,7 @@
 import { Switch } from "@/components/ui/switch";
+import type { SavePowerTimersInput } from "@/orpc/schema";
 import type { Control, UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import type { SavePowerTimersInput } from "@/orpc/schema";
 
 interface EnabledToggleControllerProps {
 	index: number;
@@ -11,12 +11,12 @@ interface EnabledToggleControllerProps {
 	className?: string;
 }
 
-export default function EnabledToggleController({ 
-	index, 
-	control, 
-	form, 
+export default function EnabledToggleController({
+	index,
+	control,
+	form,
 	timerNumber,
-	className 
+	className,
 }: EnabledToggleControllerProps) {
 	return (
 		<Controller
@@ -28,8 +28,7 @@ export default function EnabledToggleController({
 						checked={field.value}
 						onCheckedChange={(value) => {
 							field.onChange(value);
-							// Re-validate dependent fields when enabled state changes
-							form.trigger(`powerTimers.${index}.daysOfWeek`);
+							form.trigger();
 						}}
 						aria-label={`${field.value ? "Disable" : "Enable"} timer ${timerNumber}`}
 					/>
