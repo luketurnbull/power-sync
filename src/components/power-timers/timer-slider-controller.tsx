@@ -6,9 +6,10 @@ import TimerSlider from "./timer-slider";
 interface TimerSliderControllerProps {
 	index: number;
 	control: Control<SavePowerTimersInput>;
+	disabled?: boolean;
 }
 
-export default function TimerSliderController({ index, control }: TimerSliderControllerProps) {
+export default function TimerSliderController({ index, control, disabled = false }: TimerSliderControllerProps) {
 	return (
 		<Controller
 			control={control}
@@ -25,6 +26,7 @@ export default function TimerSliderController({ index, control }: TimerSliderCon
 							onPowerOnTimeChange={powerOnField.onChange}
 							powerOffTimeError={powerOffFieldState.error?.message}
 							powerOnTimeError={powerOnFieldState.error?.message}
+							disabled={disabled}
 						/>
 					)}
 				/>

@@ -7,6 +7,7 @@ import {
 import type { SavePowerTimersInput } from "@/orpc/schema";
 import { getTimerErrorMessages } from "@/utils/timer-errors";
 import type { Control, FieldArrayWithId, UseFormReturn } from "react-hook-form";
+import { cn } from "@/lib/utils";
 import DaySelectorController from "./day-selector-controller";
 import EnabledToggleController from "./enabled-toggle-controller";
 import TimerErrorAlert from "./timer-error-alert";
@@ -47,15 +48,23 @@ export default function PowerTimersAccordion({
 									/>
 								</div>
 								<AccordionTrigger className="pl-16 cursor-pointer">
-									<span className="text-lg font-medium">
+									<span className={cn("text-lg font-medium", !timer.enabled && "text-muted-foreground")}>
 										{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
 									</span>
 								</AccordionTrigger>
 							</div>
 							<AccordionContent className="space-y-4">
-								<TimerSliderController index={index} control={control} />
+								<TimerSliderController 
+									index={index} 
+									control={control} 
+									disabled={!timer.enabled}
+								/>
 
-								<DaySelectorController index={index} control={control} />
+								<DaySelectorController 
+									index={index} 
+									control={control} 
+									disabled={!timer.enabled}
+								/>
 							</AccordionContent>
 						</AccordionItem>
 

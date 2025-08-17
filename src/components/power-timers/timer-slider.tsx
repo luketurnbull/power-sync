@@ -10,6 +10,7 @@ interface TimerSliderProps {
 	powerOffTimeError?: string;
 	powerOnTimeError?: string;
 	onValidate?: () => void;
+	disabled?: boolean;
 }
 
 export default function TimerSlider({
@@ -20,6 +21,7 @@ export default function TimerSlider({
 	powerOffTimeError,
 	powerOnTimeError,
 	onValidate,
+	disabled = false,
 }: TimerSliderProps) {
 	// Convert time string to minutes since midnight
 	const timeToMinutes = (time: string): number => {
@@ -71,6 +73,7 @@ export default function TimerSlider({
 						onChange={handlePowerOffInputChange}
 						startIcon={<Clock className="w-4 h-4" />}
 						aria-invalid={!!powerOffTimeError}
+						disabled={disabled}
 					/>
 					{/* End input - hidden on desktop, shown on mobile */}
 					<Input
@@ -80,6 +83,7 @@ export default function TimerSlider({
 						startIcon={<Clock className="w-4 h-4" />}
 						className="md:hidden"
 						aria-invalid={!!powerOnTimeError}
+						disabled={disabled}
 					/>
 				</div>
 
@@ -92,6 +96,7 @@ export default function TimerSlider({
 						min={0}
 						step={15}
 						className="relative"
+						disabled={disabled}
 					/>
 				</div>
 
@@ -103,6 +108,7 @@ export default function TimerSlider({
 					startIcon={<Clock className="w-4 h-4" />}
 					className="hidden md:block md:w-24"
 					aria-invalid={!!powerOnTimeError}
+					disabled={disabled}
 				/>
 			</div>
 		</div>

@@ -88,7 +88,7 @@ bunx --bun run check
 - [x] Create the Timer Slider component
 - [x] Create the Day Selector component
 - [x] Create the Enabled Toggle component
-- [ ] Add disabled state to the power timers
+- [x] Add disabled state to the power timers
 - [ ] Create the Drop Down menu component with delete option
 - [ ] Add skeleton loading state
 - [ ] Add saving state (Outline in the requirements this could take 20 - 30 seconds)

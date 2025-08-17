@@ -24,12 +24,14 @@ interface DaySelectorProps {
 	selectedDays: DayOfWeek[];
 	onDaysChange: (days: DayOfWeek[]) => void;
 	error?: string;
+	disabled?: boolean;
 }
 
 export default function DaySelector({
 	selectedDays,
 	onDaysChange,
 	error,
+	disabled = false,
 }: DaySelectorProps) {
 	return (
 		<ToggleGroup
@@ -39,6 +41,7 @@ export default function DaySelector({
 			variant="outline"
 			size="lg"
 			className="w-full"
+			disabled={disabled}
 		>
 			{DAYS.map((day) => (
 				<ToggleGroupItem

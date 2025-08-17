@@ -31,10 +31,18 @@ export default function PowerTimersTable({
 							<TableBody>
 								<TableRow>
 									<TableCell className="w-[400px]">
-										<TimerSliderController index={index} control={control} />
+										<TimerSliderController 
+											index={index} 
+											control={control} 
+											disabled={!timer.enabled}
+										/>
 									</TableCell>
 									<TableCell>
-										<DaySelectorController index={index} control={control} />
+										<DaySelectorController 
+											index={index} 
+											control={control} 
+											disabled={!timer.enabled}
+										/>
 									</TableCell>
 									<TableCell className="text-right">
 										<EnabledToggleController

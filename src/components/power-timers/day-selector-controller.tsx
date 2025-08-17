@@ -6,9 +6,10 @@ import DaySelector from "./day-selector";
 interface DaySelectorControllerProps {
 	index: number;
 	control: Control<SavePowerTimersInput>;
+	disabled?: boolean;
 }
 
-export default function DaySelectorController({ index, control }: DaySelectorControllerProps) {
+export default function DaySelectorController({ index, control, disabled = false }: DaySelectorControllerProps) {
 	return (
 		<Controller
 			control={control}
@@ -18,6 +19,7 @@ export default function DaySelectorController({ index, control }: DaySelectorCon
 					selectedDays={field.value}
 					onDaysChange={field.onChange}
 					error={fieldState.error?.message}
+					disabled={disabled}
 				/>
 			)}
 		/>
