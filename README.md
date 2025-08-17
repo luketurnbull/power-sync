@@ -70,7 +70,7 @@ bunx --bun run check
 - [x] Bomb initial code
 - [x] Add requirements and designs to repository
 - [x] Add the Tailwind/Shadcn styles
-- [ ] Create zod schemas for the data
-- [ ] Create oRPC call to get power cycles
-- [ ] Create oRPC call to update power cycles
+- [x] Create zod schemas for the data
+- [x] Create oRPC call to get power cycles
+- [x] Create oRPC call to update power cycles
 - [ ] Add all shadcn/ui components needed

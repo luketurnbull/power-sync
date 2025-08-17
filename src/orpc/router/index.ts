@@ -1,6 +1,6 @@
-import { addTodo, listTodos } from './todos'
+import { listPowerTimers, updatePowerTimers } from "./power-timers";
 
 export default {
-  listTodos,
-  addTodo,
-}
+	listPowerTimers,
+	updatePowerTimers,
+};
