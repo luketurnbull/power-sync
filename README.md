@@ -75,5 +75,16 @@ bunx --bun run check
 - [x] Create oRPC call to update power cycles
 - [x] Add all shadcn/ui components needed
 - [x] Create initial component for power timers
-- [ ] Create Accordion for mobile version
-- [ ] Create Table for desktop version
+- [x] Create Accordion for mobile version
+- [x] Create Table for desktop version
+- [x] Add buttons to add and save power timers
+- [ ] Wrap the Accordion and Table in a Form component
+- [ ] Implement the logic to add and save power timers using the Form component
+- [ ] Create the Timer Slider component
+- [ ] Create the Day Selector component
+- [ ] Create the Enabled Toggle component
+- [ ] Create the Drop Down menu component with delete option
+- [ ] Add skeleton loading state
+- [ ] Add saving state (Outline in the requirements this could take 20 - 30 seconds)
+- [ ] Add sonner for success and error messages?
+- [ ] Add testing around validation using Vitest
