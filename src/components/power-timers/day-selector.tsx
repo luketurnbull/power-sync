@@ -1,5 +1,5 @@
-import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import { cn } from "@/lib/utils";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 type DayOfWeek =
 	| "MONDAY"
@@ -38,13 +38,15 @@ export default function DaySelector({
 			onValueChange={onDaysChange}
 			variant="outline"
 			size="lg"
-			className={cn("w-full", error && "border-destructive")}
+			className="w-full"
 		>
 			{DAYS.map((day) => (
 				<ToggleGroupItem
 					key={day.full}
 					value={day.full}
 					aria-label={`Toggle ${day.full.toLowerCase()}`}
+					aria-errormessage={error}
+					className={cn(error && "border-destructive")}
 				>
 					{day.short}
 				</ToggleGroupItem>

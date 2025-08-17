@@ -12,19 +12,19 @@ interface TimerSliderProps {
 	onValidate?: () => void;
 }
 
-export default function TimerSlider({ 
-	powerOffTime, 
-	powerOnTime, 
-	onPowerOffTimeChange, 
+export default function TimerSlider({
+	powerOffTime,
+	powerOnTime,
+	onPowerOffTimeChange,
 	onPowerOnTimeChange,
 	powerOffTimeError,
 	powerOnTimeError,
-	onValidate
+	onValidate,
 }: TimerSliderProps) {
 	// Convert time string to minutes since midnight
 	const timeToMinutes = (time: string): number => {
-		if (!time || !time.includes(':')) return 0;
-		const [hours, minutes] = time.split(':').map(Number);
+		if (!time || !time.includes(":")) return 0;
+		const [hours, minutes] = time.split(":").map(Number);
 		if (Number.isNaN(hours) || Number.isNaN(minutes)) return 0;
 		return hours * 60 + minutes;
 	};
@@ -33,7 +33,7 @@ export default function TimerSlider({
 	const minutesToTime = (minutes: number): string => {
 		const hours = Math.floor(minutes / 60);
 		const mins = minutes % 60;
-		return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+		return `${hours.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}`;
 	};
 
 	const powerOffMinutes = timeToMinutes(powerOffTime);
@@ -47,7 +47,9 @@ export default function TimerSlider({
 		}
 	};
 
-	const handlePowerOffInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handlePowerOffInputChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+	) => {
 		onPowerOffTimeChange(e.target.value);
 		onValidate?.();
 	};
@@ -56,9 +58,6 @@ export default function TimerSlider({
 		onPowerOnTimeChange(e.target.value);
 		onValidate?.();
 	};
-
-	// Show first available error (prioritize start time error)
-	const errorMessage = powerOffTimeError || powerOnTimeError;
 
 	return (
 		<div className="space-y-2">
@@ -83,7 +82,7 @@ export default function TimerSlider({
 						aria-invalid={!!powerOnTimeError}
 					/>
 				</div>
-				
+
 				{/* Slider - separate row on mobile, middle on desktop */}
 				<div className="md:flex-1 px-2">
 					<Slider
@@ -106,11 +105,6 @@ export default function TimerSlider({
 					aria-invalid={!!powerOnTimeError}
 				/>
 			</div>
-
-			{/* Single error message below everything */}
-			{errorMessage && (
-				<p className="text-sm text-destructive">{errorMessage}</p>
-			)}
 		</div>
 	);
 }
