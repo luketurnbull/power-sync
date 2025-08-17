@@ -23,8 +23,9 @@ describe("powerTimerSchema", () => {
 			
 			expect(result.success).toBe(false);
 			if (!result.success) {
-				expect(result.error.errors[0].message).toBe("Please select at least one day");
-				expect(result.error.errors[0].path).toEqual(["daysOfWeek"]);
+				const error = result.error.issues.find(issue => issue.path.includes("daysOfWeek"));
+				expect(error?.message).toBe("Please select at least one day");
+				expect(error?.path).toEqual(["daysOfWeek"]);
 			}
 		});
 
@@ -34,8 +35,9 @@ describe("powerTimerSchema", () => {
 			
 			expect(result.success).toBe(false);
 			if (!result.success) {
-				expect(result.error.errors[0].message).toBe("Power off time is required");
-				expect(result.error.errors[0].path).toEqual(["powerOffTime"]);
+				const error = result.error.issues.find(issue => issue.path.includes("powerOffTime"));
+				expect(error?.message).toBe("Power off time is required");
+				expect(error?.path).toEqual(["powerOffTime"]);
 			}
 		});
 
@@ -45,8 +47,9 @@ describe("powerTimerSchema", () => {
 			
 			expect(result.success).toBe(false);
 			if (!result.success) {
-				expect(result.error.errors[0].message).toBe("Power on time is required");
-				expect(result.error.errors[0].path).toEqual(["powerOnTime"]);
+				const error = result.error.issues.find(issue => issue.path.includes("powerOnTime"));
+				expect(error?.message).toBe("Power on time is required");
+				expect(error?.path).toEqual(["powerOnTime"]);
 			}
 		});
 
@@ -56,7 +59,8 @@ describe("powerTimerSchema", () => {
 			
 			expect(result.success).toBe(false);
 			if (!result.success) {
-				expect(result.error.errors[0].message).toBe("Power off time is required");
+				const error = result.error.issues.find(issue => issue.path.includes("powerOffTime"));
+				expect(error?.message).toBe("Power off time is required");
 			}
 		});
 
@@ -66,7 +70,8 @@ describe("powerTimerSchema", () => {
 			
 			expect(result.success).toBe(false);
 			if (!result.success) {
-				expect(result.error.errors[0].message).toBe("Power on time is required");
+				const error = result.error.issues.find(issue => issue.path.includes("powerOnTime"));
+				expect(error?.message).toBe("Power on time is required");
 			}
 		});
 
@@ -197,7 +202,8 @@ describe("savePowerTimersInputSchema", () => {
 		
 		expect(result.success).toBe(false);
 		if (!result.success) {
-			expect(result.error.errors[0].message).toBe("Maximum 7 timers allowed");
+			const error = result.error.issues.find(issue => issue.message.includes("Maximum"));
+			expect(error?.message).toBe("Maximum 7 timers allowed");
 		}
 	});
 
@@ -211,7 +217,8 @@ describe("savePowerTimersInputSchema", () => {
 		
 		expect(result.success).toBe(false);
 		if (!result.success) {
-			expect(result.error.errors[0].message).toBe("Power off time is required");
+			const error = result.error.issues.find(issue => issue.path.includes("powerOffTime"));
+			expect(error?.message).toBe("Power off time is required");
 		}
 	});
 

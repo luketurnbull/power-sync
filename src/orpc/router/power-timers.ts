@@ -36,6 +36,9 @@ export const updatePowerTimers = os
 		// TODO: This will just call the mock function outlined in the requirements
 		console.info("Updating power timers", input.powerTimers);
 
+		// TODO: This will just call the mock function outlined in the requirements
+		//savePowerTimers(input.powerTimers);
+
 		// Show timeout to replicate loading state
 
 		await new Promise((resolve) => setTimeout(resolve, 5000));

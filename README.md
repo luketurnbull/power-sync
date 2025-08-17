@@ -2,6 +2,22 @@
 
 Code test for Fusion Sync. Requirements found [here](/requirements/REQUIREMENTS.md).
 
+## Notes from Luke to Fusion Sync
+
+Hello Fusion Sync,
+
+I spent longer than 2 hours this task, closer to 4-5 hours.
+
+In retrospect; I shouldn't have mocked the design up in Figma and shouldn't have focused on creating a separate usage for mobile users (Accordion vs Table).
+
+I could have concentrated more on the functionality. Particularly the loading and errors states from the API. Since I didn't get that far, I didn't get to the point of adding the "sonner/toast notifications" for success and error messages as outlined in the TODOs.
+
+If I had more time I would create a loading state that showed updated text and icons to show the user what is happening and give more feedback.
+
+I also realised during the implementation that due to the slider, you can't start time before the end time, which goes against the requirements.
+
+Anyway, I've got everything here in the README to checkout. Enjoy!
+
 ## Presumptions
 
 - Adding a new timer defaults to 9:00AM - 5:00PM, enabled, and Monday - Friday
@@ -95,5 +111,4 @@ bunx --bun run check
 - [x] Create the Drop Down menu component with delete option
 - [ ] Add saving state (Outline in the requirements this could take 20 - 30 seconds)
 - [ ] Add sonner for success and error messages?
-- [ ] Add testing around validation using Vitest
-- [ ] Add skeleton loading state
+- [x] Add testing around validation using Vitest
