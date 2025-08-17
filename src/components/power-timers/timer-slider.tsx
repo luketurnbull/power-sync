@@ -94,7 +94,7 @@ export default function TimerSlider({
 						onValueChange={handleSliderChange}
 						max={1439} // 23:59 in minutes
 						min={0}
-						step={15}
+						step={5}
 						className="relative"
 						disabled={disabled}
 					/>

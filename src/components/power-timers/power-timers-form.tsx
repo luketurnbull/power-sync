@@ -82,7 +82,7 @@ export default function PowerTimersForm({
 				)}
 
 				{/* Mobile Accordion View */}
-				<div className="block md:hidden">
+				<div className="block lg:hidden">
 					<PowerTimersAccordion
 						fields={fields}
 						form={form}
@@ -93,7 +93,7 @@ export default function PowerTimersForm({
 				</div>
 
 				{/* Desktop Table View */}
-				<div className="hidden md:block">
+				<div className="hidden lg:block">
 					<PowerTimersTable
 						fields={fields}
 						form={form}
