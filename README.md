@@ -78,7 +78,7 @@ bunx --bun run check
 - [x] Create Accordion for mobile version
 - [x] Create Table for desktop version
 - [x] Add buttons to add and save power timers
-- [ ] Wrap the Accordion and Table in a Form component
+- [x] Wrap the Accordion and Table in a Form component
 - [ ] Implement the logic to add and save power timers using the Form component
 - [ ] Create the Timer Slider component
 - [ ] Create the Day Selector component
