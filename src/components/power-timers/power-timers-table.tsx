@@ -1,4 +1,5 @@
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Switch } from "@/components/ui/switch";
 import type { SavePowerTimersInput } from "@/orpc/schema";
 import type { FieldArrayWithId, UseFormReturn } from "react-hook-form";
 import DaySelector from "./day-selector";
@@ -58,7 +59,15 @@ export default function PowerTimersTable({
 									}
 								/>
 							</TableCell>
-							<TableCell>{timer.enabled ? "Yes" : "No"}</TableCell>
+							<TableCell>
+								<Switch
+									checked={timer.enabled}
+									onCheckedChange={(enabled) =>
+										form.setValue(`powerTimers.${index}.enabled`, enabled)
+									}
+									aria-label={`${timer.enabled ? "Disable" : "Enable"} timer ${timer.timerNumber}`}
+								/>
+							</TableCell>
 						</TableRow>
 					);
 				})}

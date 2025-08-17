@@ -4,6 +4,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Switch } from "@/components/ui/switch";
 import type { UseFormReturn, FieldArrayWithId } from "react-hook-form";
 import type { SavePowerTimersInput } from "@/orpc/schema";
 import TimerSlider from "./timer-slider";
@@ -29,7 +30,20 @@ export default function PowerTimersAccordion({
 				return (
 					<AccordionItem key={field.id} value={`timer-${index}`}>
 						<AccordionTrigger>
-							{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
+							<div className="flex items-center justify-between w-full mr-4">
+								<span className="font-medium">
+									{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
+								</span>
+								<div onClick={(e) => e.stopPropagation()}>
+									<Switch
+										checked={timer.enabled}
+										onCheckedChange={(enabled) =>
+											form.setValue(`powerTimers.${index}.enabled`, enabled)
+										}
+										aria-label={`${timer.enabled ? "Disable" : "Enable"} timer ${timer.timerNumber}`}
+									/>
+								</div>
+							</div>
 						</AccordionTrigger>
 						<AccordionContent className="space-y-4">
 							<TimerSlider
@@ -53,10 +67,6 @@ export default function PowerTimersAccordion({
 								}
 								error={form.formState.errors.powerTimers?.[index]?.daysOfWeek?.message}
 							/>
-							
-							<div className="text-sm text-muted-foreground">
-								Enabled: {timer.enabled ? "Yes" : "No"}
-							</div>
 						</AccordionContent>
 					</AccordionItem>
 				);
