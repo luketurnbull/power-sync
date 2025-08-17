@@ -1,9 +1,7 @@
 import { orpc } from "@/orpc/client";
-import { useQuery } from "@tanstack/react-query";
-import { Plus, Save } from "lucide-react";
-import { Button } from "../ui/button";
-import PowerTimersAccordion from "./power-timers-accordion";
-import PowerTimersTable from "./power-timers-table";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { type SavePowerTimersInput } from "@/orpc/schema";
+import PowerTimersForm from "./power-timers-form";
 
 export default function PowerTimers() {
 	const { data: powerTimers = [], isLoading } = useQuery(
@@ -12,32 +10,26 @@ export default function PowerTimers() {
 		}),
 	);
 
+	const { mutate: updatePowerTimers, isPending } = useMutation({
+		mutationFn: orpc.updatePowerTimers.call,
+		onSuccess: () => {
+			console.info("Power timers updated");
+		},
+	});
+
+	const handleSubmit = (data: SavePowerTimersInput) => {
+		updatePowerTimers(data);
+	};
+
 	if (isLoading) {
 		return <div className="text-center py-8">Loading...</div>;
 	}
 
 	return (
-		<div className="w-full flex flex-col gap-4">
-			{/* Mobile Accordion View */}
-			<div className="block md:hidden">
-				<PowerTimersAccordion powerTimers={powerTimers} />
-			</div>
-
-			{/* Desktop Table View */}
-			<div className="hidden md:block">
-				<PowerTimersTable powerTimers={powerTimers} />
-			</div>
-
-			<div className="flex flex-col md:flex-row justify-end gap-2">
-				<Button variant="outline">
-					<Plus className="w-4 h-4" />
-					Add New
-				</Button>
-				<Button>
-					<Save className="w-4 h-4" />
-					Save
-				</Button>
-			</div>
-		</div>
+		<PowerTimersForm 
+			powerTimers={powerTimers} 
+			onSubmit={handleSubmit}
+			isSubmitting={isPending}
+		/>
 	);
 }

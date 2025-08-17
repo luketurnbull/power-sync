@@ -4,34 +4,46 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import type { PowerTimer } from "@/orpc/schema";
+import { useFieldArray } from "react-hook-form";
+import type { UseFormReturn } from "react-hook-form";
+import type { SavePowerTimersInput } from "@/orpc/schema";
 
 interface PowerTimersAccordionProps {
-	powerTimers: PowerTimer[];
+	form: UseFormReturn<SavePowerTimersInput>;
 }
 
 export default function PowerTimersAccordion({
-	powerTimers,
+	form,
 }: PowerTimersAccordionProps) {
-	const formatTimeRange = (timer: PowerTimer) => {
-		return `${timer.powerOffTime} - ${timer.powerOnTime}`;
+	const { fields } = useFieldArray({
+		control: form.control,
+		name: "powerTimers",
+	});
+
+	const formatTimeRange = (powerOffTime: string, powerOnTime: string) => {
+		return `${powerOffTime} - ${powerOnTime}`;
 	};
 
 	return (
 		<Accordion type="single">
-			{powerTimers.map((timer, index) => (
-				<AccordionItem key={timer.timerNumber} value={`timer-${index}`}>
-					<AccordionTrigger>{formatTimeRange(timer)}</AccordionTrigger>
-					<AccordionContent>
-						<div className="text-sm text-muted-foreground">
-							Days: {timer.daysOfWeek.join(", ")}
-						</div>
-						<div className="text-sm text-muted-foreground">
-							Enabled: {timer.enabled ? "Yes" : "No"}
-						</div>
-					</AccordionContent>
-				</AccordionItem>
-			))}
+			{fields.map((field, index) => {
+				const timer = form.watch(`powerTimers.${index}`);
+				return (
+					<AccordionItem key={field.id} value={`timer-${index}`}>
+						<AccordionTrigger>
+							{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
+						</AccordionTrigger>
+						<AccordionContent>
+							<div className="text-sm text-muted-foreground">
+								Days: {timer.daysOfWeek.join(", ")}
+							</div>
+							<div className="text-sm text-muted-foreground">
+								Enabled: {timer.enabled ? "Yes" : "No"}
+							</div>
+						</AccordionContent>
+					</AccordionItem>
+				);
+			})}
 		</Accordion>
 	);
 }
