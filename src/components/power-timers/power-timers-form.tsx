@@ -31,7 +31,7 @@ export default function PowerTimersForm({
 		},
 	});
 
-	const { fields, append } = useFieldArray({
+	const { fields, append, remove } = useFieldArray({
 		control: form.control,
 		name: "powerTimers",
 	});
@@ -46,6 +46,19 @@ export default function PowerTimersForm({
 		};
 
 		append(newTimer);
+	};
+
+	const handleDuplicate = (index: number) => {
+		const timerToDuplicate = form.getValues(`powerTimers.${index}`);
+		const duplicatedTimer: PowerTimer = {
+			...timerToDuplicate,
+			timerNumber: fields.length + 1,
+		};
+		append(duplicatedTimer);
+	};
+
+	const handleDelete = (index: number) => {
+		remove(index);
 	};
 
 	return (
@@ -70,6 +83,8 @@ export default function PowerTimersForm({
 						fields={fields}
 						form={form}
 						control={form.control}
+						onDuplicate={handleDuplicate}
+						onDelete={handleDelete}
 					/>
 				</div>
 
@@ -79,6 +94,8 @@ export default function PowerTimersForm({
 						fields={fields}
 						form={form}
 						control={form.control}
+						onDuplicate={handleDuplicate}
+						onDelete={handleDelete}
 					/>
 				</div>
 

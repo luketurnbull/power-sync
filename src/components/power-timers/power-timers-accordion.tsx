@@ -10,6 +10,7 @@ import { getTimerErrorMessages } from "@/utils/timer-errors";
 import type { Control, FieldArrayWithId, UseFormReturn } from "react-hook-form";
 import DaySelectorController from "./day-selector-controller";
 import EnabledToggleController from "./enabled-toggle-controller";
+import TimerActionsDropdown from "./timer-actions-dropdown";
 import TimerErrorAlert from "./timer-error-alert";
 import TimerSliderController from "./timer-slider-controller";
 
@@ -17,12 +18,16 @@ interface PowerTimersAccordionProps {
 	fields: FieldArrayWithId<SavePowerTimersInput, "powerTimers", "id">[];
 	form: UseFormReturn<SavePowerTimersInput>;
 	control: Control<SavePowerTimersInput>;
+	onDuplicate?: (index: number) => void;
+	onDelete?: (index: number) => void;
 }
 
 export default function PowerTimersAccordion({
 	fields,
 	form,
 	control,
+	onDuplicate,
+	onDelete,
 }: PowerTimersAccordionProps) {
 	const formatTimeRange = (powerOffTime: string, powerOnTime: string) => {
 		return `${powerOffTime} - ${powerOnTime}`;
@@ -47,7 +52,13 @@ export default function PowerTimersAccordion({
 										timerNumber={timer.timerNumber}
 									/>
 								</div>
-								<AccordionTrigger className="pl-16 cursor-pointer">
+								<div className="absolute right-4 top-1/2 -translate-y-1/2 z-10">
+									<TimerActionsDropdown
+										onDuplicate={() => onDuplicate?.(index)}
+										onDelete={() => onDelete?.(index)}
+									/>
+								</div>
+								<AccordionTrigger className="pl-16 pr-16 cursor-pointer">
 									<span
 										className={cn(
 											"text-lg font-medium",
