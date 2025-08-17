@@ -86,7 +86,7 @@ bunx --bun run check
 - [x] Wrap the Accordion and Table in a Form component
 - [x] Implement the logic to add and save power timers using the Form component
 - [x] Create the Timer Slider component
-- [ ] Create the Day Selector component
+- [x] Create the Day Selector component
 - [ ] Create the Enabled Toggle component
 - [ ] Create the Drop Down menu component with delete option
 - [ ] Add skeleton loading state

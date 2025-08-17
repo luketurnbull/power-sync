@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import type { UseFormReturn, FieldArrayWithId } from "react-hook-form";
 import type { SavePowerTimersInput } from "@/orpc/schema";
+import type { FieldArrayWithId, UseFormReturn } from "react-hook-form";
+import DaySelector from "./day-selector";
 import TimerSlider from "./timer-slider";
 
 interface PowerTimersTableProps {
@@ -23,18 +24,40 @@ export default function PowerTimersTable({
 								<TimerSlider
 									powerOffTime={timer.powerOffTime}
 									powerOnTime={timer.powerOnTime}
-									onPowerOffTimeChange={(time) => 
+									onPowerOffTimeChange={(time) =>
 										form.setValue(`powerTimers.${index}.powerOffTime`, time)
 									}
-									onPowerOnTimeChange={(time) => 
+									onPowerOnTimeChange={(time) =>
 										form.setValue(`powerTimers.${index}.powerOnTime`, time)
 									}
-									powerOffTimeError={form.formState.errors.powerTimers?.[index]?.powerOffTime?.message}
-									powerOnTimeError={form.formState.errors.powerTimers?.[index]?.powerOnTime?.message}
-									onValidate={() => form.trigger([`powerTimers.${index}.powerOffTime`, `powerTimers.${index}.powerOnTime`])}
+									powerOffTimeError={
+										form.formState.errors.powerTimers?.[index]?.powerOffTime
+											?.message
+									}
+									powerOnTimeError={
+										form.formState.errors.powerTimers?.[index]?.powerOnTime
+											?.message
+									}
+									onValidate={() =>
+										form.trigger([
+											`powerTimers.${index}.powerOffTime`,
+											`powerTimers.${index}.powerOnTime`,
+										])
+									}
 								/>
 							</TableCell>
-							<TableCell>{timer.daysOfWeek.join(", ")}</TableCell>
+							<TableCell>
+								<DaySelector
+									selectedDays={timer.daysOfWeek}
+									onDaysChange={(days) =>
+										form.setValue(`powerTimers.${index}.daysOfWeek`, days)
+									}
+									error={
+										form.formState.errors.powerTimers?.[index]?.daysOfWeek
+											?.message
+									}
+								/>
+							</TableCell>
 							<TableCell>{timer.enabled ? "Yes" : "No"}</TableCell>
 						</TableRow>
 					);

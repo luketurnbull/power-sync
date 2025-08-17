@@ -7,6 +7,7 @@ import {
 import type { UseFormReturn, FieldArrayWithId } from "react-hook-form";
 import type { SavePowerTimersInput } from "@/orpc/schema";
 import TimerSlider from "./timer-slider";
+import DaySelector from "./day-selector";
 
 interface PowerTimersAccordionProps {
 	fields: FieldArrayWithId<SavePowerTimersInput, "powerTimers", "id">[];
@@ -44,9 +45,15 @@ export default function PowerTimersAccordion({
 								powerOnTimeError={form.formState.errors.powerTimers?.[index]?.powerOnTime?.message}
 								onValidate={() => form.trigger([`powerTimers.${index}.powerOffTime`, `powerTimers.${index}.powerOnTime`])}
 							/>
-							<div className="text-sm text-muted-foreground">
-								Days: {timer.daysOfWeek.join(", ")}
-							</div>
+							
+							<DaySelector
+								selectedDays={timer.daysOfWeek}
+								onDaysChange={(days) => 
+									form.setValue(`powerTimers.${index}.daysOfWeek`, days)
+								}
+								error={form.formState.errors.powerTimers?.[index]?.daysOfWeek?.message}
+							/>
+							
 							<div className="text-sm text-muted-foreground">
 								Enabled: {timer.enabled ? "Yes" : "No"}
 							</div>
