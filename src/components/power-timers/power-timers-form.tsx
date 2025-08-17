@@ -1,9 +1,13 @@
-import { Plus, Save } from "lucide-react";
-import { useForm, useFieldArray } from "react-hook-form";
+import {
+	type PowerTimer,
+	type SavePowerTimersInput,
+	savePowerTimersInputSchema,
+} from "@/orpc/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, Plus, Save } from "lucide-react";
+import { useFieldArray, useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Form, FormMessage } from "../ui/form";
-import { savePowerTimersInputSchema, type SavePowerTimersInput, type PowerTimer } from "@/orpc/schema";
 import PowerTimersAccordion from "./power-timers-accordion";
 import PowerTimersTable from "./power-timers-table";
 
@@ -13,7 +17,11 @@ interface PowerTimersFormProps {
 	isSubmitting?: boolean;
 }
 
-export default function PowerTimersForm({ powerTimers, onSubmit, isSubmitting = false }: PowerTimersFormProps) {
+export default function PowerTimersForm({
+	powerTimers,
+	onSubmit,
+	isSubmitting = false,
+}: PowerTimersFormProps) {
 	const form = useForm<SavePowerTimersInput>({
 		resolver: zodResolver(savePowerTimersInputSchema),
 		mode: "onChange",
@@ -40,36 +48,50 @@ export default function PowerTimersForm({ powerTimers, onSubmit, isSubmitting = 
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="w-full flex flex-col gap-4"
+			>
 				{/* Mobile Accordion View */}
 				<div className="block md:hidden">
-					<PowerTimersAccordion fields={fields} form={form} control={form.control} />
+					<PowerTimersAccordion
+						fields={fields}
+						form={form}
+						control={form.control}
+					/>
 				</div>
 
 				{/* Desktop Table View */}
 				<div className="hidden md:block">
-					<PowerTimersTable fields={fields} form={form} control={form.control} />
+					<PowerTimersTable
+						fields={fields}
+						form={form}
+						control={form.control}
+					/>
 				</div>
 
 				{/* Show form-level validation errors */}
 				{form.formState.errors.powerTimers && (
-					<FormMessage>
-						{form.formState.errors.powerTimers.message}
-					</FormMessage>
+					<FormMessage>{form.formState.errors.powerTimers.message}</FormMessage>
 				)}
 
 				<div className="flex flex-col md:flex-row justify-end gap-2">
-					<Button 
-						type="button" 
-						variant="outline"
-						onClick={addTimer}
-					>
+					<Button type="button" variant="outline" onClick={addTimer}>
 						<Plus className="w-4 h-4" />
 						Add New
 					</Button>
 					<Button type="submit" disabled={isSubmitting}>
-						<Save className="w-4 h-4" />
-						{isSubmitting ? "Saving..." : "Save"}
+						{isSubmitting ? (
+							<>
+								<Loader2 className="w-4 h-4 animate-spin" />
+								Saving...
+							</>
+						) : (
+							<>
+								<Save className="w-4 h-4" />
+								Save
+							</>
+						)}
 					</Button>
 				</div>
 			</form>

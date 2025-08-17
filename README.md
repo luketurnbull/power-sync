@@ -90,7 +90,7 @@ bunx --bun run check
 - [x] Create the Enabled Toggle component
 - [x] Add disabled state to the power timers
 - [ ] Create the Drop Down menu component with delete option
-- [ ] Add skeleton loading state
 - [ ] Add saving state (Outline in the requirements this could take 20 - 30 seconds)
 - [ ] Add sonner for success and error messages?
 - [ ] Add testing around validation using Vitest
+- [ ] Add skeleton loading state

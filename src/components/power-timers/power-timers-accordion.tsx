@@ -4,10 +4,10 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import { cn } from "@/lib/utils";
 import type { SavePowerTimersInput } from "@/orpc/schema";
 import { getTimerErrorMessages } from "@/utils/timer-errors";
 import type { Control, FieldArrayWithId, UseFormReturn } from "react-hook-form";
-import { cn } from "@/lib/utils";
 import DaySelectorController from "./day-selector-controller";
 import EnabledToggleController from "./enabled-toggle-controller";
 import TimerErrorAlert from "./timer-error-alert";
@@ -48,27 +48,33 @@ export default function PowerTimersAccordion({
 									/>
 								</div>
 								<AccordionTrigger className="pl-16 cursor-pointer">
-									<span className={cn("text-lg font-medium", !timer.enabled && "text-muted-foreground")}>
+									<span
+										className={cn(
+											"text-lg font-medium",
+											!timer.enabled && "text-muted-foreground",
+											errorMessages.length > 0 && "text-destructive",
+										)}
+									>
 										{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
 									</span>
 								</AccordionTrigger>
 							</div>
-							<AccordionContent className="space-y-4">
-								<TimerSliderController 
-									index={index} 
-									control={control} 
+							<AccordionContent className="space-y-8">
+								<TimerErrorAlert errorMessages={errorMessages} />
+
+								<TimerSliderController
+									index={index}
+									control={control}
 									disabled={!timer.enabled}
 								/>
 
-								<DaySelectorController 
-									index={index} 
-									control={control} 
+								<DaySelectorController
+									index={index}
+									control={control}
 									disabled={!timer.enabled}
 								/>
 							</AccordionContent>
 						</AccordionItem>
-
-						<TimerErrorAlert errorMessages={errorMessages} />
 					</div>
 				);
 			})}
