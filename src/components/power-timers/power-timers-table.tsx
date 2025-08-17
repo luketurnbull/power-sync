@@ -1,11 +1,11 @@
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { SavePowerTimersInput } from "@/orpc/schema";
-import type { FieldArrayWithId, UseFormReturn, Control } from "react-hook-form";
 import { getTimerErrorMessages } from "@/utils/timer-errors";
-import TimerErrorAlert from "./timer-error-alert";
-import TimerSliderController from "./timer-slider-controller";
+import type { Control, FieldArrayWithId, UseFormReturn } from "react-hook-form";
 import DaySelectorController from "./day-selector-controller";
 import EnabledToggleController from "./enabled-toggle-controller";
+import TimerErrorAlert from "./timer-error-alert";
+import TimerSliderController from "./timer-slider-controller";
 
 interface PowerTimersTableProps {
 	fields: FieldArrayWithId<SavePowerTimersInput, "powerTimers", "id">[];
@@ -31,18 +31,12 @@ export default function PowerTimersTable({
 							<TableBody>
 								<TableRow>
 									<TableCell className="w-[400px]">
-										<TimerSliderController
-											index={index}
-											control={control}
-										/>
+										<TimerSliderController index={index} control={control} />
 									</TableCell>
 									<TableCell>
-										<DaySelectorController
-											index={index}
-											control={control}
-										/>
+										<DaySelectorController index={index} control={control} />
 									</TableCell>
-									<TableCell>
+									<TableCell className="text-right">
 										<EnabledToggleController
 											index={index}
 											control={control}

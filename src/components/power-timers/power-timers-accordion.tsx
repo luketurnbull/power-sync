@@ -37,11 +37,8 @@ export default function PowerTimersAccordion({
 				return (
 					<div key={field.id} className="space-y-2">
 						<AccordionItem value={`timer-${index}`}>
-							<AccordionTrigger>
-								<div className="flex items-center justify-between w-full mr-4">
-									<span className="font-medium">
-										{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
-									</span>
+							<div className="relative">
+								<div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
 									<EnabledToggleController
 										index={index}
 										control={control}
@@ -49,7 +46,12 @@ export default function PowerTimersAccordion({
 										timerNumber={timer.timerNumber}
 									/>
 								</div>
-							</AccordionTrigger>
+								<AccordionTrigger className="pl-16 cursor-pointer">
+									<span className="text-lg font-medium">
+										{formatTimeRange(timer.powerOffTime, timer.powerOnTime)}
+									</span>
+								</AccordionTrigger>
+							</div>
 							<AccordionContent className="space-y-4">
 								<TimerSliderController index={index} control={control} />
 
